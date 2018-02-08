@@ -19,6 +19,14 @@ import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+
+import static junit.framework.TestCase.assertTrue;
 
 /**
  * Common base for all integration tests
@@ -41,6 +49,17 @@ public abstract class AbstractIT {
         client = OwnCloudClientFactory.createOwnCloudClient(url, context, true);
         client.setCredentials(new OwnCloudBasicCredentials(loginName, password));
         client.setUserId(loginName); // for test same as userId
+    }
+
+    public String createFile(String name) throws IOException {
+        File tempDir = context.getFilesDir();
+
+        File file = new File(tempDir + File.separator + name);
+        file.createNewFile();
+
+        assertTrue(file.exists());
+
+        return file.getAbsolutePath();
     }
 
     @After
