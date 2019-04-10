@@ -61,8 +61,6 @@ public class SearchRemoteOperation extends RemoteOperation {
 
     private static final String HEADER_CONTENT_TYPE_VALUE = "text/xml";
 
-    private static final String DAV_NAMESPACE = "DAV:";
-
     public enum SearchType {
         FILE_SEARCH,
         FAVORITE_SEARCH,
@@ -177,20 +175,20 @@ public class SearchRemoteOperation extends RemoteOperation {
         }
 
         // Create Nodes & Elements
-        Element searchRequestElement = query.createElementNS(DAV_NAMESPACE, "d:searchrequest");
-        Element basicSearchElement = query.createElementNS(DAV_NAMESPACE, "d:basicsearch");
-        Element selectElement = query.createElementNS(DAV_NAMESPACE, "d:select");
-        Element selectPropsElement = query.createElementNS(DAV_NAMESPACE, "d:prop");
+        Element searchRequestElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:searchrequest");
+        Element basicSearchElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:basicsearch");
+        Element selectElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:select");
+        Element selectPropsElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:prop");
         // get all
-        Element displayNameElement = query.createElementNS(DAV_NAMESPACE, "d:displayname");
-        Element contentTypeElement = query.createElementNS(DAV_NAMESPACE, "d:getcontenttype");
-        Element resourceTypeElement = query.createElementNS(DAV_NAMESPACE, "d:resourcetype");
-        Element contentLengthElement = query.createElementNS(DAV_NAMESPACE, "d:getcontentlength");
-        Element lastModifiedElement = query.createElementNS(DAV_NAMESPACE, "d:getlastmodified");
-        Element creationDate = query.createElementNS(DAV_NAMESPACE, "d:creationdate");
-        Element etagElement = query.createElementNS(DAV_NAMESPACE, "d:getetag");
-        Element quotaUsedElement = query.createElementNS(DAV_NAMESPACE, "d:quota-used-bytes");
-        Element quotaAvailableElement = query.createElementNS(DAV_NAMESPACE, "d:quota-available-bytes");
+        Element displayNameElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:displayname");
+        Element contentTypeElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:getcontenttype");
+        Element resourceTypeElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:resourcetype");
+        Element contentLengthElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:getcontentlength");
+        Element lastModifiedElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:getlastmodified");
+        Element creationDate = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:creationdate");
+        Element etagElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:getetag");
+        Element quotaUsedElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:quota-used-bytes");
+        Element quotaAvailableElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:quota-available-bytes");
         Element permissionsElement = query.createElementNS(WebdavEntry.NAMESPACE_OC, "oc:permissions");
         Element remoteIdElement = query.createElementNS(WebdavEntry.NAMESPACE_OC, "oc:id");
         Element sizeElement = query.createElementNS(WebdavEntry.NAMESPACE_OC, "oc:size");
@@ -210,27 +208,27 @@ public class SearchRemoteOperation extends RemoteOperation {
         selectPropsElement.appendChild(sizeElement);
         selectPropsElement.appendChild(favoriteElement);
 
-        Element fromElement = query.createElementNS(DAV_NAMESPACE, "d:from");
-        Element scopeElement = query.createElementNS(DAV_NAMESPACE, "d:scope");
-        Element hrefElement = query.createElementNS(DAV_NAMESPACE, "d:href");
-        Element depthElement = query.createElementNS(DAV_NAMESPACE, "d:depth");
+        Element fromElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:from");
+        Element scopeElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:scope");
+        Element hrefElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:href");
+        Element depthElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:depth");
         Text hrefTextElement = query.createTextNode("/files/" + getClient().getUserId());
         Text depthTextElement = query.createTextNode("infinity");
-        Element whereElement = query.createElementNS(DAV_NAMESPACE, "d:where");
+        Element whereElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:where");
         Element folderElement = null;
         if (filterOutFiles) {
-            folderElement = query.createElementNS(DAV_NAMESPACE, "d:is-collection");
+            folderElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:is-collection");
         }
         Element equalsElement;
         if (searchType == SearchType.FAVORITE_SEARCH || searchType == SearchType.FILE_ID_SEARCH) {
-            equalsElement = query.createElementNS(DAV_NAMESPACE, "d:eq");
+            equalsElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:eq");
         } else if (searchType == SearchType.RECENTLY_MODIFIED_SEARCH ||
                 searchType == SearchType.RECENTLY_ADDED_SEARCH) {
-            equalsElement = query.createElementNS(DAV_NAMESPACE, "d:gt");
+            equalsElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:gt");
         } else if (searchType == SearchType.GALLERY_SEARCH) {
-            equalsElement = query.createElementNS(DAV_NAMESPACE, "d:or");
+            equalsElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:or");
         } else {
-            equalsElement = query.createElementNS(DAV_NAMESPACE, "d:like");
+            equalsElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:like");
         }
 
         Element propElement = null;
@@ -241,22 +239,22 @@ public class SearchRemoteOperation extends RemoteOperation {
         Element videoLikeElement = null;
 
         if (searchType != SearchType.GALLERY_SEARCH) {
-            propElement = query.createElementNS(DAV_NAMESPACE, "d:prop");
+            propElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:prop");
             queryElement = null;
             if (searchType == SearchType.CONTENT_TYPE_SEARCH) {
-                queryElement = query.createElementNS(DAV_NAMESPACE, "d:getcontenttype");
+                queryElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:getcontenttype");
             } else if (searchType == SearchType.FILE_SEARCH) {
-                queryElement = query.createElementNS(DAV_NAMESPACE, "d:displayname");
+                queryElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:displayname");
             } else if (searchType == SearchType.FAVORITE_SEARCH) {
                 queryElement = query.createElementNS(WebdavEntry.NAMESPACE_OC, "oc:favorite");
             } else if (searchType == SearchType.RECENTLY_MODIFIED_SEARCH) {
-                queryElement = query.createElementNS(DAV_NAMESPACE, "d:getlastmodified");
+                queryElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:getlastmodified");
             } else if (searchType == SearchType.RECENTLY_ADDED_SEARCH) {
-                queryElement = query.createElementNS(DAV_NAMESPACE, "d:creationdate");
+                queryElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:creationdate");
             } else if (searchType == SearchType.FILE_ID_SEARCH) {
                 queryElement = query.createElementNS(WebdavEntry.NAMESPACE_OC, "oc:fileid");
             }
-            literalElement = query.createElementNS(DAV_NAMESPACE, "d:literal");
+            literalElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:literal");
             if (searchType != SearchType.RECENTLY_MODIFIED_SEARCH && searchType != SearchType.RECENTLY_ADDED_SEARCH) {
                 if (searchType == SearchType.FILE_SEARCH) {
                     internalSearchString = "%" + internalSearchString + "%";
@@ -276,15 +274,15 @@ public class SearchRemoteOperation extends RemoteOperation {
                 literalTextElement = query.createTextNode(formattedDateString);
             }
         } else {
-            imageLikeElement = query.createElementNS(DAV_NAMESPACE, "d:like");
-            Element imagePropElement = query.createElementNS(DAV_NAMESPACE, "d:prop");
-            Element imageQueryElement = query.createElementNS(DAV_NAMESPACE, "d:getcontenttype");
-            Element imageLiteralElement = query.createElementNS(DAV_NAMESPACE, "d:literal");
+            imageLikeElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:like");
+            Element imagePropElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:prop");
+            Element imageQueryElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:getcontenttype");
+            Element imageLiteralElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:literal");
             Text imageLiteralTextElement = query.createTextNode("image/%");
-            videoLikeElement = query.createElementNS(DAV_NAMESPACE, "d:like");
-            Element videoPropElement = query.createElementNS(DAV_NAMESPACE, "d:prop");
-            Element videoQueryElement = query.createElementNS(DAV_NAMESPACE, "d:getcontenttype");
-            Element videoLiteralElement = query.createElementNS(DAV_NAMESPACE, "d:literal");
+            videoLikeElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:like");
+            Element videoPropElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:prop");
+            Element videoQueryElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:getcontenttype");
+            Element videoLiteralElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:literal");
             Text videoLiteralTextElement = query.createTextNode("video/%");
 
             videoLiteralElement.appendChild(videoLiteralTextElement);
@@ -301,7 +299,7 @@ public class SearchRemoteOperation extends RemoteOperation {
 
         }
 
-        Element orderByElement = query.createElementNS(DAV_NAMESPACE, "d:orderby");
+        Element orderByElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:orderby");
 
         // Disabling order for now, but will leave the code in place for the future
 
@@ -330,7 +328,7 @@ public class SearchRemoteOperation extends RemoteOperation {
         hrefElement.appendChild(hrefTextElement);
         depthElement.appendChild(depthTextElement);
         if (folderElement != null) {
-            Element andElement = query.createElementNS(DAV_NAMESPACE, "d:and");
+            Element andElement = query.createElementNS(WebdavEntry.NAMESPACE_DAV, "d:and");
             andElement.appendChild(folderElement);
             andElement.appendChild(equalsElement);
             whereElement.appendChild(andElement);
