@@ -30,20 +30,18 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.owncloud.android.lib.common.OwnCloudBasicCredentials;
 import com.owncloud.android.lib.common.OwnCloudClient;
 import com.owncloud.android.lib.common.OwnCloudClientFactory;
-import org.apache.commons.io.FileUtils;
 import com.owncloud.android.lib.resources.files.ReadFolderRemoteOperation;
 import com.owncloud.android.lib.resources.files.RemoveFileRemoteOperation;
 import com.owncloud.android.lib.resources.files.model.RemoteFile;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.BeforeClass;
-import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,7 +52,6 @@ import java.util.ArrayList;
  * Common base for all integration tests
  */
 
-@RunWith(AndroidJUnit4.class)
 public abstract class AbstractIT {
     protected static OwnCloudClient client;
     protected static Context context;
