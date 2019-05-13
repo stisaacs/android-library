@@ -31,8 +31,6 @@ steps:
       - push
     status:
       - failure
-    branch:
-      - master
 
 trigger:
   branch:
