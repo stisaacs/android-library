@@ -72,7 +72,6 @@ steps:
   username: $EMAIL_USERNAME
   password: $EMAIL_PASSWORD
   from: nextcloud-drone@kaminsky.me
-  skip_verify: true
   recipients_only: true
   recipients: [ $EMAIL_RECIPIENTS ]
   environment:
