@@ -23,7 +23,8 @@ steps:
   port: 587
   username: $EMAIL_USERNAME
   password: $EMAIL_PASSWORD
-  from: nextcloud-drone@kaminsky.me
+  from:
+    - nextcloud-drone@kaminsky.me
   recipients_only: true
   recipients: [ tobias@nextcloud.com ]
   environment:
