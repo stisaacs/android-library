@@ -91,8 +91,6 @@ steps:
       - push
     status:
       - failure
-    branch:
-      - master
 
 services:
 - name: server
