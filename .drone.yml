@@ -4,7 +4,6 @@ name: test
 steps:
 - name: test
   image: nextcloudci/android:android-44
-  privileged: true
   environment:
     LOG_USERNAME:
       from_secret: LOG_USERNAME
@@ -23,8 +22,6 @@ steps:
   port: 587
   username: $EMAIL_USERNAME
   password: $EMAIL_PASSWORD
-  from:
-    - nextcloud-drone@kaminsky.me
   recipients_only: true
   recipients: [ tobias@nextcloud.com ]
   environment:
