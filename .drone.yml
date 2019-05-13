@@ -57,8 +57,6 @@ steps:
     GIT_TOKEN:
       from_secret: GIT_TOKEN
   commands:
-    - emulator -avd android-27 -no-window -no-audio &
-    - ./wait_for_emulator.sh
     - ./gradlew assembleDebug
     - ./gradlew jacocoTestDebugUnitTestReport || scripts/uploadReport.sh $LOG_USERNAME $LOG_PASSWORD $DRONE_BUILD_NUMBER "Unit" $DRONE_PULL_REQUEST $GIT_USERNAME $GIT_TOKEN
     - ./gradlew installDebugAndroidTest
@@ -87,8 +85,6 @@ steps:
     EMAIL_HOST:
       from_secret: EMAIL_HOST
   when:
-    event:
-      - push
     status:
       - failure
 
