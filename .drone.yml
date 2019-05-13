@@ -25,7 +25,7 @@ steps:
   password: $EMAIL_PASSWORD
   from: nextcloud-drone@kaminsky.me
   recipients_only: true
-  recipients: [ $EMAIL_RECIPIENTS ]
+  recipients: $EMAIL_RECIPIENTS
   environment:
     EMAIL_USERNAME:
       from_secret: EMAIL_USERNAME
